@@ -1,5 +1,7 @@
 **README file**
 
+<hr>
+
 **RECORD SHOP**
 *Add record*
 *Delete record*

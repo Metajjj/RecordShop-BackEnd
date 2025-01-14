@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordShop-BE", "RecordShop-BE.csproj", "{92213AE5-51DA-427F-ACA0-5ADC98BBC688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "..\TestApp\TestApp.csproj", "{3730FA45-2CFB-427C-AB4D-26ECC1F78CD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{92213AE5-51DA-427F-ACA0-5ADC98BBC688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92213AE5-51DA-427F-ACA0-5ADC98BBC688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92213AE5-51DA-427F-ACA0-5ADC98BBC688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3730FA45-2CFB-427C-AB4D-26ECC1F78CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3730FA45-2CFB-427C-AB4D-26ECC1F78CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3730FA45-2CFB-427C-AB4D-26ECC1F78CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3730FA45-2CFB-427C-AB4D-26ECC1F78CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,18 +6,24 @@ namespace RecordShop_BE.Services
     public interface IAlbumService
     {
         List<Albums> GetAllAlbums();
+        Albums GetAlbumById(string id);
     }
 
     public class AlbumService : IAlbumService
     {
-        private IAlbumRepository _albumRepository;
-        public AlbumService(IAlbumRepository albumRepository)
+        private IAlbumRepository repository;
+        public AlbumService(IAlbumRepository r)
         {
-            _albumRepository = albumRepository;
+            repository = r;
         }
         public List<Albums> GetAllAlbums()
         {
-            return _albumRepository.GetAllAlbums();
+            return repository.GetAllAlbums();
+        }
+
+        public Albums GetAlbumById(string id)
+        {
+            return repository.GetAlbumById(int.Parse(id));
         }
     }
 }
