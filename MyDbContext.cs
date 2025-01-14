@@ -7,7 +7,7 @@ namespace RecordShop_BE
     public class MyDbContext : DbContext
     {
 
-        public DbSet<Record> RecordTable { get; set; }
+        public DbSet<Albums> AlbumTable { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
