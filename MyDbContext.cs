@@ -18,8 +18,11 @@ namespace RecordShop_BE
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.EnableSensitiveDataLogging(); //To see key conflicts
+
+
             //Check if in development mode ?? run inmemory vs SQL -- this one overwrites, no need for constructor context!
-            if(host.IsDevelopment())
+            if (host.IsDevelopment())
             { optionsBuilder.UseInMemoryDatabase("TempDB"); }
             else
             {

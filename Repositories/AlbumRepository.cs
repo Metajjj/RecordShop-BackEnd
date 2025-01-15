@@ -6,6 +6,7 @@ namespace RecordShop_BE.Repositories
     {
         public List<Albums> GetAllAlbums();
         public Albums GetAlbumById(int id);
+        public Albums PostAlbum(Albums a);
     }
     public class AlbumRepository : IAlbumRepository
     {
@@ -15,12 +16,47 @@ namespace RecordShop_BE.Repositories
 
         public List<Albums> GetAllAlbums()
         {
-            return context.AlbumTable.ToList();
+            //memory-db returns entries as they were added, does not sort by ID or anything implicit!
+
+            return context.AlbumTable.OrderBy(a=>a.Id).ToList();
         }
 
         public Albums GetAlbumById(int id)
         {
             return context.AlbumTable.ToList().FirstOrDefault(a => a.Id == id);
+        }
+
+            //TODO refactor else will block large DBs ??
+        private int PlugInAlbumGaps()
+        {
+            var data = context.AlbumTable.OrderBy(a => a.Id).ToList();
+            //TODO fix.. if id2 exists only.. starts 1 retursn 1+1
+
+            for(int i = 0; i <= data.Count(); i++){
+                try
+                {
+                    if (data[i].Id != i +1)
+                    { return i +1; }
+                } catch (ArgumentOutOfRangeException e)
+                {
+                    return i+1;
+                }
+            }
+
+            return data.Count()+1;
+        }
+
+        public Albums PostAlbum(Albums a)
+        {
+
+            a.Id = PlugInAlbumGaps();
+
+            context.AlbumTable.Add(a);
+                //Replaces existing ??
+            
+            
+            context.SaveChanges(); 
+            return a;
         }
     }
 }

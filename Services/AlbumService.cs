@@ -7,6 +7,8 @@ namespace RecordShop_BE.Services
     {
         List<Albums> GetAllAlbums();
         Albums GetAlbumById(string id);
+
+        Albums PostAlbum(Albums a);
     }
 
     public class AlbumService : IAlbumService
@@ -24,6 +26,11 @@ namespace RecordShop_BE.Services
         public Albums GetAlbumById(string id)
         {
             return repository.GetAlbumById(int.Parse(id));
+        }
+
+        public Albums PostAlbum(Albums a)
+        {
+            return repository.PostAlbum(a);
         }
     }
 }

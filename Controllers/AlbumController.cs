@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using RecordShop_BE.Services;
+using RecordShop_BE.Tables;
 
 namespace RecordShop_BE.Controllers
 {
@@ -35,6 +36,17 @@ namespace RecordShop_BE.Controllers
             {
                 return BadRequest("Param is NaN! (not a number)");
             }
+        }
+
+
+        [HttpPost]
+        public IActionResult PostAlbum(Albums a)
+        {
+            //Only accept album object post, nothing else! i.e. if fails to json.Deserialize, throw err
+
+            //returns 400 if ierror
+
+            return Ok("Successfully added "+a.Title+" with ID of "+service.PostAlbum(a).Id);
         }
     }
 }
