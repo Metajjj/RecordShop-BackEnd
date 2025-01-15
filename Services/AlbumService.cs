@@ -11,6 +11,8 @@ namespace RecordShop_BE.Services
         Albums PostAlbum(Albums a);
 
         bool PutAlbum(Albums a);
+
+        Albums DeleteAlbumById(string id);
     }
 
     public class AlbumService : IAlbumService
@@ -38,6 +40,11 @@ namespace RecordShop_BE.Services
         public bool PutAlbum(Albums a)
         {
             return repository.PutAlbum(a);
+        }
+
+        public Albums DeleteAlbumById(string id)
+        {
+            return repository.DeleteAlbumById(int.Parse(id));
         }
     }
 }

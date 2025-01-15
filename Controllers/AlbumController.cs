@@ -51,7 +51,7 @@ namespace RecordShop_BE.Controllers
 
 
         [HttpPut]
-        public IActionResult PutAlbum(HttpContext htpc)
+        public IActionResult PutAlbum(HttpContext htpc) //cant test without parsing!
         {
             try
             {
@@ -59,13 +59,7 @@ namespace RecordShop_BE.Controllers
 
                 var album = JsonSerializer.Deserialize<Albums>(new StreamReader(htpc.Request.Body).ReadToEndAsync().Result);
 
-
                 var success = service.PutAlbum(album);
-
-                //null = doesnt exist..
-                //false = no change
-                //true = update
-                //err = wrong format for album
 
                     //TODO err nullable obj must have val
                 return success ? Ok(JsonSerializer.Serialize(album, new JsonSerializerOptions { WriteIndented = true })) : Accepted("No changes detected");
@@ -77,6 +71,22 @@ namespace RecordShop_BE.Controllers
             catch (ArgumentNullException ex)
             {
                 return NotFound("Given ID is not found!");
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAlbumId(string id)
+        {
+            try
+            {
+                var album = service.DeleteAlbumById(id);
+
+                return (album == null) ? NotFound("Given ID is not found!") : Ok("DELETED:\n "+JsonSerializer.Serialize(album, new JsonSerializerOptions { WriteIndented = true }));
+            }
+            catch (FormatException ex)
+            {
+                return BadRequest("Param is NaN! (not a number)");
             }
         }
     }

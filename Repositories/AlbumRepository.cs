@@ -10,6 +10,7 @@ namespace RecordShop_BE.Repositories
         public Albums GetAlbumById(int id);
         public Albums PostAlbum(Albums a);
         public bool PutAlbum(Albums a);
+        public Albums DeleteAlbumById(int id);
     }
     public class AlbumRepository : IAlbumRepository
     {
@@ -82,9 +83,19 @@ namespace RecordShop_BE.Repositories
                     //If tracked/grabbed from db.. set values than update it!
                 context.Entry(A).CurrentValues.SetValues(a);
 
+                context.SaveChanges();
+
                 return true;
             }
             throw new ArgumentNullException("Given ID not found in DB!");
+        }
+
+        public Albums DeleteAlbumById(int id)
+        {
+            var a = GetAlbumById(id);
+            context.AlbumTable.Remove(a); context.SaveChanges();
+
+            return a;
         }
     }
 }
