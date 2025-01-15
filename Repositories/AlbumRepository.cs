@@ -65,17 +65,23 @@ namespace RecordShop_BE.Repositories
         public bool PutAlbum(Albums a)
         {
             //See if any diff / exists ?
-            if (GetAlbumById(a.Id) != null)
+            var A = GetAlbumById(a.Id);
+
+            if (A != null)
             {
                 //exists
-                if( JsonSerializer.Serialize(a).Equals( JsonSerializer.Serialize( GetAlbumById(a.Id) ) ))
+                if( JsonSerializer.Serialize(a).Equals( JsonSerializer.Serialize( A ) ))
                 {
                     //Is same!
                     return false;
                 }
                 //Not same!
-                    //TODO ID 6 is not treated as PK ??
-                context.AlbumTable.Update(a);
+                //TODO ID 6 is not treated as PK ??
+                //context.AlbumTable.Update(a);
+                    
+                    //If tracked/grabbed from db.. set values than update it!
+                context.Entry(A).CurrentValues.SetValues(a);
+
                 return true;
             }
             throw new ArgumentNullException("Given ID not found in DB!");
