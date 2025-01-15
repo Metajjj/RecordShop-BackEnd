@@ -1,4 +1,6 @@
-﻿using RecordShop_BE.Tables;
+﻿using System.Text.Json;
+
+using RecordShop_BE.Tables;
 
 namespace RecordShop_BE.Repositories
 {
@@ -7,6 +9,7 @@ namespace RecordShop_BE.Repositories
         public List<Albums> GetAllAlbums();
         public Albums GetAlbumById(int id);
         public Albums PostAlbum(Albums a);
+        public bool PutAlbum(Albums a);
     }
     public class AlbumRepository : IAlbumRepository
     {
@@ -57,6 +60,25 @@ namespace RecordShop_BE.Repositories
             
             context.SaveChanges(); 
             return a;
+        }
+
+        public bool PutAlbum(Albums a)
+        {
+            //See if any diff / exists ?
+            if (GetAlbumById(a.Id) != null)
+            {
+                //exists
+                if( JsonSerializer.Serialize(a).Equals( JsonSerializer.Serialize( GetAlbumById(a.Id) ) ))
+                {
+                    //Is same!
+                    return false;
+                }
+                //Not same!
+                    //TODO ID 6 is not treated as PK ??
+                context.AlbumTable.Update(a);
+                return true;
+            }
+            throw new ArgumentNullException("Given ID not found in DB!");
         }
     }
 }

@@ -28,9 +28,9 @@ namespace RecordShop_BE.Controllers
         {
             try
             {
-                var joke = service.GetAlbumById(id);
+                var album = service.GetAlbumById(id);
 
-                return (joke == null) ? NotFound("Given ID is not found!") : Ok(JsonSerializer.Serialize(joke, new JsonSerializerOptions { WriteIndented = true }));
+                return (album == null) ? NotFound("Given ID is not found!") : Ok(JsonSerializer.Serialize(album, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (FormatException ex)
             {
@@ -47,6 +47,37 @@ namespace RecordShop_BE.Controllers
             //returns 400 if ierror
 
             return Ok("Successfully added "+a.Title+" with ID of "+service.PostAlbum(a).Id);
+        }
+
+
+        [HttpPut]
+        public IActionResult PutAlbum(HttpContext htpc)
+        {
+            try
+            {
+                htpc.Request.Body.Position = 0; //Ensure is at 0 so readable
+
+                var album = JsonSerializer.Deserialize<Albums>(new StreamReader(htpc.Request.Body).ReadToEndAsync().Result);
+
+
+                var success = service.PutAlbum(album);
+
+                //null = doesnt exist..
+                //false = no change
+                //true = update
+                //err = wrong format for album
+
+                    //TODO err nullable obj must have val
+                return success ? Ok(JsonSerializer.Serialize(album, new JsonSerializerOptions { WriteIndented = true })) : Accepted("No changes detected");
+            }
+            catch (JsonException ex)
+            {
+                return BadRequest("Body is not in a valid format! (not a Album!)\n"+ex.Message);
+            }
+            catch (ArgumentNullException ex)
+            {
+                return NotFound("Given ID is not found!");
+            }
         }
     }
 }
