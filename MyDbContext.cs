@@ -18,19 +18,14 @@ namespace RecordShop_BE
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //Check if in development mode ?? run inmemory vs SQL -- this one overwrites, no need for constructor!
+            //Check if in development mode ?? run inmemory vs SQL -- this one overwrites, no need for constructor context!
             if(host.IsDevelopment())
-            {
-                optionsBuilder.UseInMemoryDatabase("TempDB");
-            }
+            { optionsBuilder.UseInMemoryDatabase("TempDB"); }
             else
             {
                 optionsBuilder.UseSqlServer("TODO sql");
-                throw new NotImplementedException();
+                throw new NotImplementedException(); //WORKS !
             }
-            
-            //optionsBuilder.UseInMemoryDatabase("TempDB");
-            //optionsBuilder.UseSqlServer("ConnectionString");
         }
 
         /*protected override void OnModelCreating(ModelBuilder modelBuilder)

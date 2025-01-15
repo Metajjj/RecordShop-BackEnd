@@ -46,7 +46,7 @@ namespace RecordShop_BE
 
             var app = builder.Build();
 
-                //Now runs the options!
+                //Now runs the options and console.WriteLines!
             var db = app.Services.CreateScope().ServiceProvider.GetService<MyDbContext>();
             db.Add<Albums>(new Albums { Id = 2, Title = "ABC" });
             db.SaveChanges();
